@@ -40,6 +40,11 @@ Use window function can reduce sub-query usage, but still can work this out with
 	
 
 2:unique salary Twitter
+Unique Salaries
+Find the top three unique salaries for each department. Output the department name and the top 3 unique salaries by each department. Order your results alphabetically by department and then by highest salary to lowest.
+
+https://platform.stratascratch.com/coding/9897-highest-salary-in-department?code_type=1 (the original problem in demo seems gone, this is the closest one)
+
 usually in redshift, it's quick and no need to dedup first, but the demo solution provided in strata scratch used group by to dedup first
 With base as (
 Select distinct department 
