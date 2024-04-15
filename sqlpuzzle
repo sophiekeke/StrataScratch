@@ -125,26 +125,34 @@ order by year
 ;
 
 
---can also also use extract function
-with base as (
-select extract(year from host_since::date) as year
---to_char(host_since,'YYYY') as year
-,count(id) as host_cnt
-from airbnb_search_details
---group by to_char(host_since,'YYYY')
-group by extract(year from host_since::date)
+--can also also use extract function and self join if requires to not use window function like lag
+WITH base AS (
+    SELECT 
+        EXTRACT(YEAR FROM host_since) AS year,
+        COUNT(id) AS host_cnt
+    FROM 
+        airbnb_search_details
+    GROUP BY 
+        EXTRACT(YEAR FROM host_since)
 )
-,
-pre as (
-select year
-,host_cnt
-,lag(host_cnt,1) over (order by year ) as pre_year_host_cnt
-from base 
+, pre AS (
+    SELECT 
+        b1.year AS year,
+        b1.host_cnt AS host_cnt,
+        b2.host_cnt AS pre_year_host_cnt
+    FROM 
+        base b1
+    LEFT JOIN base b2 ON b1.year = b2.year + 1
 )
-select *
---,case when pre_year_host_cnt is null then 100 else round((1.00* (host_cnt-pre_year_host_cnt)/(pre_year_host_cnt) * 100)) end as growth_rate
---round(((host_cnt-pre_year_host_cnt)/cast(pre_year_host_cnt as numeric)) * 100) end as growth_rate
-,round((1.00* (host_cnt-pre_year_host_cnt)/(pre_year_host_cnt) * 100))  as growth_rate
-from pre
-order by year
-;
+SELECT 
+    year,
+    host_cnt,
+    pre_year_host_cnt,
+    CASE
+        WHEN pre_year_host_cnt IS NULL THEN NULL
+        ELSE ROUND((1.00* (host_cnt - pre_year_host_cnt) / pre_year_host_cnt::NUMERIC) * 100)
+    END AS growth_rate
+FROM 
+    pre
+ORDER BY 
+    year;
