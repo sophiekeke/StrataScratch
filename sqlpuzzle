@@ -19,20 +19,20 @@ Use window function can reduce sub-query usage, but still can work this out with
 
 
 /* sql solution */
-  with base as
-  (select request_date
-  ,to_char(request_date,'YYYY-MM') as request_ym 
-  ,distance_to_travel/monetary_cost as distance_per_dollar
-  from uber_request_logs),
-  agg as (
-  select request_date
-  ,distance_per_dollar
-  ,avg(distance_per_dollar) over(partition by request_ym ) as avg_distance_per_dollar
-  from base)
-  select  request_date
-  ,round(abs(distance_per_dollar-avg_distance_per_dollar)::decimal,2) as avg_diff
-  from agg
-  order by request_date
-  ;
+      with base as
+      (select request_date
+      ,to_char(request_date,'YYYY-MM') as request_ym 
+      ,distance_to_travel/monetary_cost as distance_per_dollar
+      from uber_request_logs),
+      agg as (
+      select request_date
+      ,distance_per_dollar
+      ,avg(distance_per_dollar) over(partition by request_ym ) as avg_distance_per_dollar
+      from base)
+      select  request_date
+      ,round(abs(distance_per_dollar-avg_distance_per_dollar)::decimal,2) as avg_diff
+      from agg
+      order by request_date
+      ;
 
 
