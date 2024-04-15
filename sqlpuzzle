@@ -17,10 +17,12 @@ The demo sample query is wrong as he only calculated the avg function on the dis
 
 Use window function can reduce sub-query usage, but still can work this out without using window function
 
+
+BEGIN
 /* Write your SQL here. Terminate each statement with a semicolon. */
 
 
-with base as
+    with base as
     (select request_date
     ,to_char(request_date,'YYYY-MM') as request_ym 
     ,distance_to_travel/monetary_cost as distance_per_dollar
@@ -36,7 +38,7 @@ with base as
     order by request_date
     ;
 
-	 
+END	 
 	
 
 
