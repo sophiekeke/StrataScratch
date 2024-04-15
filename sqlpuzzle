@@ -93,3 +93,35 @@ Select distinct policy_num
 From base where percentile_num <=5;
 
 
+
+4:growth of Airbnb
+https://platform.stratascratch.com/coding/9637-growth-of-airbnb?code_type=1
+
+Estimate the growth of Airbnb each year using the number of hosts registered as the growth metric. The rate of growth is calculated by taking ((number of hosts registered in the current year - number of hosts registered in the previous year) / the number of hosts registered in the previous year) * 100.
+Output the year, number of hosts in the current year, number of hosts in the previous year, and the rate of growth. Round the rate of growth to the nearest percent and order the result in the ascending order based on the year.
+Assume that the dataset consists only of unique hosts, meaning there are no duplicate hosts listed.
+
+
+with base as (
+select to_char(host_since,'YYYY') as year
+,count(id) as host_cnt
+from airbnb_search_details
+group by to_char(host_since,'YYYY'))
+,
+pre as (
+select year
+,host_cnt
+,lag(host_cnt,1) over (order by year ) as pre_year_host_cnt
+from base 
+)
+select *
+--if it's blank, leave it as blank since cannot calculate the growth rate, but can double confirm the request
+--,case when pre_year_host_cnt is null then 100 else round((1.00* (host_cnt-pre_year_host_cnt)/(pre_year_host_cnt) * 100)) end as growth_rate
+--use 1.00 and cast would result in same result
+--round(((host_cnt-pre_year_host_cnt)/cast(pre_year_host_cnt as numeric)) * 100) end as growth_rate
+,round((1.00* (host_cnt-pre_year_host_cnt)/(pre_year_host_cnt) * 100))  as growth_rate
+from pre
+order by year
+;
+
+
