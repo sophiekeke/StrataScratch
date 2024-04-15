@@ -9,6 +9,13 @@ Lag/lead
 https://platform.stratascratch.com/coding/10302-distance-per-dollar?code_type=1
 You’re given a dataset of uber rides with the traveling distance (‘distance_to_travel’) and cost (‘monetary_cost’) for each ride. First, find the difference between the distance-per-dollar for each date and the average distance-per-dollar for that year-month. Distance-per-dollar is defined as the distance traveled divided by the cost of the ride. Use the calculated difference on each date to calculate absolute average difference in distance-per-dollar metric on monthly basis (year-month).
 
+
+The output should include the year-month (YYYY-MM) and the absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal).
+You should also count both success and failed request_status as the distance and cost values are populated for all ride requests. Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
+
+
+You’re given a dataset of uber rides with the traveling distance (‘distance_to_travel’) and cost (‘monetary_cost’) for each ride. First, find the difference between the distance-per-dollar for each date and the average distance-per-dollar for that year-month. Distance-per-dollar is defined as the distance traveled divided by the cost of the ride. Use the calculated difference on each date to calculate absolute average difference in distance-per-dollar metric on monthly basis (year-month).
+
 --The output should include the year-month (YYYY-MM) and the absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal).
 
 You should also count both success and failed request_status as the distance and cost values are populated for all ride requests. Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
@@ -58,5 +65,31 @@ From base
 Where rm_salaries <=3
 Order by department, salary desc
 
+
+3: fraud
+https://platform.stratascratch.com/coding/10303-top-percentile-fraud?code_type=1
+ABC Corp is a mid-sized insurer in the US and in the recent past their fraudulent claims have increased significantly for their personal auto insurance portfolio. They have developed a ML based predictive model to identify propensity of fraudulent claims. Now, they assign highly experienced claim adjusters for top 5 percentile of claims identified by the model.
+Your objective is to identify the top 5 percentile of claims from each state. Your output should be policy number, state, claim cost, and fraud score.
+
+NTILE N Bins
+Ntile 100 - percentile
+Ntile 4 —Quartile
+Ntile 10 —Decile
+
+
+With base as (
+Select
+policy_num
+,state
+,claim_cost
+,fraud_score
+,ntile(100) over (partition by state order by fraud_score desc) as percentile_num
+From fraud_score )
+Select distinct policy_num
+,state
+,claim_cost
+,fraud_score
+,percentile_num
+From base where percentile_num <=5;
 
 
