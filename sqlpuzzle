@@ -196,3 +196,35 @@ select to_char(year_month,'YYYY-MM') as year_month
 from base
 order by year_month
 ;
+
+
+
+Monthly Sales Rolling Average Amazon
+https://platform.stratascratch.com/coding/2148-monthly-sales-rolling-average?code_type=1
+You have been asked to calculate the rolling average for book sales in 2022.
+
+
+A rolling average continuously updates a data set's average to include all data in the set up to that point. For example, the rolling average for February would be calculated by adding the book sales from January and February and dividing by two; the rolling average for March would be calculated by adding the book sales from January, February, and March and dividing by three; and so on.
+
+
+Output the month, the sales for that month, and an extra column containing the rolling average rounded to the nearest whole number.
+with base as 
+(select 
+to_char(bo.order_date,'YYYY-MM') as year_month
+,sum(unit_price * quantity) as book_sales
+from book_orders bo
+left join amazon_books ab on ab.book_id =  bo.book_id
+group by to_char(order_date,'YYYY-MM')
+),
+agg as (
+select year_month
+,book_sales
+,avg(book_sales) over (order by year_month asc rows between unbounded preceding and current row) as avg_rollover_sales
+from base
+)
+select year_month
+,book_sales
+,round(avg_rollover_sales,0) as avg_rollover_sales
+from agg
+order by year_month
+;
