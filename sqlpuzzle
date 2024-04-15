@@ -45,7 +45,8 @@ Find the top three unique salaries for each department. Output the department na
 
 https://platform.stratascratch.com/coding/9897-highest-salary-in-department?code_type=1 (the original problem in demo seems gone, this is the closest one)
 
-usually in redshift, it's quick and no need to dedup first, but the demo solution provided in strata scratch used group by to dedup first
+usually in redshift, it's quick and no need to dedup first, but the demo solution provided in strata scratch used group by to dedup first, use dense_rank or rank depends on the request how to handle ties.
+Three main functions can use to find the highest would be rank, dense_rank, row_number(when there is a tie, this is useful, it just return exact three rows if there are larger than three rows meet the criteria)
 With base as (
 Select distinct department 
 ,salary
