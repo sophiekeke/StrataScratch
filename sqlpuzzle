@@ -19,6 +19,7 @@ Use window function can reduce sub-query usage, but still can work this out with
 
 /* Write your SQL here. Terminate each statement with a semicolon. */
 
+
 with base as
     (select request_date
     ,to_char(request_date,'YYYY-MM') as request_ym 
