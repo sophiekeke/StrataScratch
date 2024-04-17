@@ -165,8 +165,6 @@ Revenue Over Time Amazon
 https://platform.stratascratch.com/coding/2148-monthly-sales-rolling-average?code_type=1
 
 Find the 3-month rolling average of total revenue from purchases given a table with users, their purchase amount, and date purchased. Do not include returns which are represented by negative purchase values. Output the year-month (YYYY-MM) and 3-month rolling average of revenue, sorted from earliest month to latest month.
-
-
 A 3-month rolling average is defined by calculating the average total revenue from all user purchases for the current month and previous two months. The first two months will not be a true 3-month rolling average since we are not given data from last year. Assume each month has at least one purchase.
 
 with base as (
@@ -240,3 +238,47 @@ n PRECEDING – n rows before the current row.
 CURRENT ROW – Just the current row.
 n FOLLOWING – n rows after the current row.
 UNBOUNDED FOLLOWING – All rows after the current row.
+
+running total sample --not stratascratch puzzle
+SELECT date, revenue,
+    SUM(revenue) OVER (
+      ORDER BY date
+      ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_total
+FROM sales
+ORDER BY date;
+
+
+
+
+--Strata Scratch other exercise
+Users By Average Session Time facebook
+
+https://platform.stratascratch.com/coding/10352-users-by-avg-session-time?code_type=1
+
+Calculate each user's average session time. A session is defined as the time difference between a page_load and page_exit. For simplicity, assume a user has only 1 session per day and
+if there are multiple of the same events on that day, consider only the latest page_load and earliest page_exit, with an obvious restriction that load time event should happen before exit time event . Output the user_id and their average session time.
+
+with base as (
+select date(timestamp) as date
+,user_id
+,max(timestamp) as page_load_time
+from facebook_web_log
+where action = 'page_load'
+group by  date(timestamp) ,user_id)
+,page_exist as
+(select date(fwl.timestamp) as date
+,fwl.user_id
+,page_load_time
+,min(case when fwl.timestamp > page_load_time then fwl.timestamp end) as page_exit_time
+from facebook_web_log fwl
+left join base b on date( fwl.timestamp) = b.date and fwl.user_id = b.user_id 
+where fwl.action = 'page_exit'
+group by date(fwl.timestamp),fwl.user_id,b.page_load_time)
+select user_id
+,avg(page_exit_time::timestamp - page_load_time::timestamp) as avg_session
+from page_exist
+group by 1
+order by user_id
+;
+
+
