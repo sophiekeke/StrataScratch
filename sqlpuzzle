@@ -348,3 +348,10 @@ month	late_order_percentage	late_order_min_percentage
 2021-12	0.125	0.125
 2022-01	0.364	0.364
 
+instructions: https://www.stratascratch.com/blog/doordash-sql-interview-questions/
+Imagine you’re a data analyst at DoorDash, and Management wants to know, for every month, what percentage of their orders are ‘extremely late deliveries’. A delivery is considered ‘extremely late’ if the order is delivered more than 20 minutes late of the predicted delivery time.
+
+Intuitively, we would monitor the number of ‘extremely late’ deliveries month on month. However, we cannot look at this number alone. The total deliveries will change monthly and fluctuate based on season, holidays, and due to the general growth of the company. A better metric to track is the percentage of total orders that are ‘extremely late’. This is exactly what this DoorDash SQL interview question is asking us to do.
+
+Ideally, we want to see this metric lower over time or at least, be kept within a certain threshold. Otherwise, this is a cause for concern, leading to low ratings, less repeat business, and poor food quality. Sooner than you think, the company is out of business. And you’re out of your job!
+
