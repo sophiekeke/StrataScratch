@@ -554,3 +554,10 @@ The gross order total is the total of the order before adding the tip and deduct
 Note: In your output, the day of the week should be represented in text format (i.e., Monday). Also, round earnings to 2 decimals
 
 
+
+select to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar as weektime_hour 
+,round(avg(order_total + tip_amount - discount_amount::float - refunded_amount )::numeric,2) 
+as gross_earning_avg
+from doordash_delivery 
+group by to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar
+order by to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar;
