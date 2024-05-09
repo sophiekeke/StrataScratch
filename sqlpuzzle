@@ -355,3 +355,11 @@ Intuitively, we would monitor the number of ‘extremely late’ deliveries mont
 
 Ideally, we want to see this metric lower over time or at least, be kept within a certain threshold. Otherwise, this is a cause for concern, leading to low ratings, less repeat business, and poor food quality. Sooner than you think, the company is out of business. And you’re out of your job!
 
+Using a framework for that will help you structure your thoughts and communicate them in a way that the interviewer can follow. This is important because oftentimes, it is not only your coding skills that are being tested but your communication skills as well.
+
+The framework we recommend consists of the following steps.
+Explore and understand the dataset
+Confirm and state your assumptions
+Outline your high-level approach in English or pseudo-code
+Code the solution
+Code optimizations (if there are any)
