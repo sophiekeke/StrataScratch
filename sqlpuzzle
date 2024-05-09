@@ -318,3 +318,23 @@ order by user_id
 netflix puzzle, but the answer in the doc are not 100% correct
 
 
+--Doordash
+
+https://platform.stratascratch.com/coding/2113-extremely-late-delivery?code_type=1
+A delivery is flagged as extremely late if the actual delivery time is more than 20 minutes (not inclusive) after the predicted delivery time.
+You have been asked to calculate the percentage of orders that arrive extremely late each month.
+Your output should include the month in the format 'YYYY-MM' and the percentage of extremely late orders as a percentage of all orders placed in that month.
+
+--explorer data so include extra columns needed
+with base as (
+select to_char(order_placed_time,'YYYY-MM') as month
+,actual_delivery_time
+,predicted_delivery_time
+,actual_delivery_time - predicted_delivery_time as gap
+,case when EXTRACT(epoch from (actual_delivery_time - predicted_delivery_time)) > 1200 then 'Y' else 'N' end as late_deliver_flag
+,delivery_id, consumer_id from delivery_orders)
+select month
+,1.00 * count(case when late_deliver_flag='Y' then delivery_id end) / count(delivery_id) as late_order_percentage
+from base 
+group by 1 order by 1
+;
