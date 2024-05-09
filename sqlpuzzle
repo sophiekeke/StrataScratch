@@ -561,3 +561,8 @@ as gross_earning_avg
 from doordash_delivery 
 group by to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar
 order by to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar;
+
+
+--Other user question
+https://github.com/ralfsantacruz/Doordash-Analytics/blob/master/doordash_analytics.sql
+
