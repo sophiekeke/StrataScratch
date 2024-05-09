@@ -368,4 +368,11 @@ Once an order is placed, it is assigned a unique delivery ID, and the relevant d
 The delivery time/expected time of arrival of delivery is computed, and the order is assigned to a dasher/rider whose ID is also included in the table. 
 Once the order is delivered, the exact time is logged, and the customer provides their feedback through a rating.
 
+doordash
+
+https://platform.stratascratch.com/coding/2036-lowest-revenue-generated-restaurants?code_type=1
+Lowest Revenue Generated Restaurants
+Write a query that returns a list of the bottom 2% revenue generating restaurants. Return a list of restaurant IDs and their total revenue from when customers placed orders in May 2020.
+You can calculate the total revenue by summing the order_total column. And you should calculate the bottom 2% by partitioning the total revenue into evenly distributed buckets.
+
 
