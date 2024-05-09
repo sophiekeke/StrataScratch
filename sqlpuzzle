@@ -363,3 +363,9 @@ Confirm and state your assumptions
 Outline your high-level approach in English or pseudo-code
 Code the solution
 Code optimizations (if there are any)
+
+Once an order is placed, it is assigned a unique delivery ID, and the relevant details about the order like the customer, the restaurant, the date, and time of order are then logged. 
+The delivery time/expected time of arrival of delivery is computed, and the order is assigned to a dasher/rider whose ID is also included in the table. 
+Once the order is delivered, the exact time is logged, and the customer provides their feedback through a rating.
+
+
