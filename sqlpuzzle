@@ -333,9 +333,13 @@ select to_char(order_placed_time,'YYYY-MM') as month
 ,predicted_delivery_time
 ,actual_delivery_time - predicted_delivery_time as gap
 ,case when EXTRACT(epoch from (actual_delivery_time - predicted_delivery_time)) > 1200 then 'Y' else 'N' end as late_deliver_flag
+,case when EXTRACT(minute from (actual_delivery_time - predicted_delivery_time)) > 20 then 'Y' else 'N' end as late_deliver_min_flag
 ,delivery_id, consumer_id from delivery_orders)
 select month
 ,1.00 * count(case when late_deliver_flag='Y' then delivery_id end) / count(delivery_id) as late_order_percentage
+,1.00 * count(case when late_deliver_min_flag='Y' then delivery_id end) / count(delivery_id) as late_order_min_percentage
 from base 
 group by 1 order by 1
 ;
+
+
