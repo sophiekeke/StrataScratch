@@ -326,6 +326,7 @@ You have been asked to calculate the percentage of orders that arrive extremely 
 Your output should include the month in the format 'YYYY-MM' and the percentage of extremely late orders as a percentage of all orders placed in that month.
 
 --explorer data so include extra columns needed
+--clarify question like cancel order etc
 with base as (
 select to_char(order_placed_time,'YYYY-MM') as month
 ,actual_delivery_time
