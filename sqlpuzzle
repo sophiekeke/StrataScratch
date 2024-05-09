@@ -377,6 +377,7 @@ You can calculate the total revenue by summing the order_total column. And you s
 
 
 --can clarify whether we need to take discount, refund into account.
+--through my test, if result is larger than 100 records, no differce between ntile 100 return 2 vs ntile 50 return 1, however, when total records is less than 100 or even less like 10 records, ntile 50 would return only 1 record, while ntile 100 <=2 would still return 2 records.
 with base as (
 select restaurant_id, sum(order_total) as tot_revenue
 from doordash_delivery 
