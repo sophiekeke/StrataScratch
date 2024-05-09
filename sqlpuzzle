@@ -572,6 +572,9 @@ group by to_char(customer_placed_order_datetime,'Day')||extract(hour from custom
 order by to_char(customer_placed_order_datetime,'Day')||extract(hour from customer_placed_order_datetime)::varchar;
 
 
+--Analytical question
+https://www.interviewquery.com/p/doordash-analytics-case-study
+
 --Other user question
 https://github.com/ralfsantacruz/Doordash-Analytics/blob/master/doordash_analytics.sql
 
