@@ -376,3 +376,45 @@ Write a query that returns a list of the bottom 2% revenue generating restaurant
 You can calculate the total revenue by summing the order_total column. And you should calculate the bottom 2% by partitioning the total revenue into evenly distributed buckets.
 
 
+--can clarify whether we need to take discount, refund into account.
+with base as (
+select restaurant_id, sum(order_total) as tot_revenue
+from doordash_delivery 
+--where to_char(customer_placed_order_datetime,'YYYY-MM') = '2020-05'
+where customer_placed_order_datetime between '2020-05-01' and '2020-05-31'
+group by 1),
+rank_percent as (
+select restaurant_id,tot_revenue
+,ntile(100) over (order by tot_revenue) as percentile_num
+from base
+)
+select *
+from rank_percent
+where percentile_num <=2
+order by tot_revenue
+;
+restaurant_id	tot_revenue	percentile_num
+90	14.16	1
+26	14.65	2
+
+or use ntile(50) and choose the bottom 1
+with base as (
+select restaurant_id, sum(order_total) as tot_revenue
+from doordash_delivery 
+--where to_char(customer_placed_order_datetime,'YYYY-MM') = '2020-05'
+where customer_placed_order_datetime between '2020-05-01' and '2020-05-31'
+group by 1),
+rank_percent as (
+select restaurant_id,tot_revenue
+,ntile(50) over (order by tot_revenue) as percentile_num
+from base
+)
+select *
+from rank_percent
+where percentile_num =1
+order by tot_revenue
+;
+
+restaurant_id	tot_revenue	percentile_num
+90	14.16	1
+26	14.65	1
