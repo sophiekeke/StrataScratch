@@ -1,3 +1,5 @@
+**https://www.youtube.com/watch?v=Juel4a9F0gw**
+
 with base as (
 select date
 ,count(distinct case when status = 'Fraud' then Account end) as fraud_account,
