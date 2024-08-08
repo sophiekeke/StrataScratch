@@ -23,4 +23,14 @@ Product Sense:
 Case: If FB wants to launch Messenger, what is the business value of Messenger and how to measure success?
 
 
+**Product Question**: A question from an interview.
+
+**Background**: After 2010, most users had already registered for FB. Users who continued to register afterwards were "late adopters." At this time, most old users had already completed the majority of their friend searches, adding friends, and building their social networks. New users need to actively add users. Therefore, old users are less likely to actively search for and add new users, which is not beneficial for engagement.
+
+**PM Proposal**: Add a friend recommendation feature in the second position on a user's personal homepage news feed.
+
+**Question**: How would you measure the success of this feature?
+
+
+
 
