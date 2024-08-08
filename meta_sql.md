@@ -15,3 +15,11 @@ select Account
 from table 
 where status ='Fraud' and date = current_date
 and Account not in (select * from f_lst)
+
+
+
+Product Sense:
+
+case: 如果fb要launch messenger，考恁messenger有什么business value，怎么衡量successful
+
+
