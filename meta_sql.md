@@ -37,9 +37,9 @@ Case: If FB wants to launch Messenger, what is the business value of Messenger a
 
 
 
-**StrataScratch SQL**
+***StrataScratch SQL***
 
-**StrataScratch**  markdown from here >>> StrataScratch SQL
+**StrataScratch**  
 
 https://platform.stratascratch.com/coding/10064-highest-energy-consumption?code_type=1 Highest Energy Consumption
 
@@ -79,8 +79,6 @@ with base as (
 ) 
 select 1.00 * count(distinct case when status='open' then user_id end) / count(distinct user_id ) as ratio 
 from base ;
-
-<<< markdown end here
 
 
 
