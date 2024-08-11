@@ -121,8 +121,8 @@ from comp where (rank_num_after<rank_num_before) or before_comment=0
 order by rank_num_after
 ;
 ```
-
-Solution: https://www.youtube.com/watch?v=ek3OiqCkEEM
+Solution with step by step: https://www.stratascratch.com/blog/facebook-data-scientist-interview-questions/
+Solution youtube video: https://www.youtube.com/watch?v=ek3OiqCkEEM
 The tricky part is the Dec comment could be 0, so even the rank is the same, but should consider no record in that month, so needs to surface it.
 
 ```sql
