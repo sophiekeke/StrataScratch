@@ -37,7 +37,7 @@ Case: If FB wants to launch Messenger, what is the business value of Messenger a
 
 
 
-***StrataScratch SQL***
+# StrataScratch SQL
 
 **StrataScratch**  
 
