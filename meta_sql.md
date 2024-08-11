@@ -107,13 +107,17 @@ inner join fb_active_users u on c.user_id = u.user_id
 where to_char(c.created_at,'YYYY-MM') in ('2019-12','2020-01')
 group by 1
 ),
+--select * from base order by after_comment desc;
 comp as
 (select 
-country, dense_rank() over (order by after_comment desc ) as rank_num_after
+country, after_comment
+,dense_rank() over (order by after_comment desc ) as rank_num_after
+,before_comment
 ,dense_rank() over (order by before_comment desc ) as rank_num_before
 from base)
+--select * from comp;
 select country ,rank_num_after,rank_num_before
-from comp where rank_num_after<rank_num_before
+from comp where (rank_num_after<rank_num_before) or before_comment=0
 order by rank_num_after
 ;
 ```
