@@ -33,6 +33,10 @@ Case: If FB wants to launch Messenger, what is the business value of Messenger a
 
 
 
+
+
+
+
 **StrataScratch SQL**
 
 https://platform.stratascratch.com/coding/10064-highest-energy-consumption?code_type=1
