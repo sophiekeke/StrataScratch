@@ -122,3 +122,36 @@ order by rank_num_after
 ;
 ```
 
+Solution: https://www.youtube.com/watch?v=ek3OiqCkEEM
+The tricky part is the Dec comment could be 0, so even the rank is the same, but should consider no record in that month, so needs to surface it.
+
+```sql
+WITH dec_summary AS (
+    SELECT
+        country,
+        SUM(number_of_comments) AS number_of_comments_dec,
+        DENSE_RANK() OVER (ORDER BY SUM(number_of_comments) DESC) AS country_rank
+    FROM fb_active_users AS a
+    LEFT JOIN fb_comments_count AS b
+    ON a.user_id = b.user_id
+    WHERE created_at <= '2019-12-31' AND created_at >= '2019-12-01'
+        AND country IS NOT NULL
+    GROUP BY country
+),
+jan_summary AS (
+    SELECT
+        country,
+        SUM(number_of_comments) AS number_of_comments_jan,
+        DENSE_RANK() OVER (ORDER BY SUM(number_of_comments) DESC) AS country_rank
+    FROM fb_active_users AS a
+    LEFT JOIN fb_comments_count AS b
+    ON a.user_id = b.user_id
+    WHERE created_at <= '2020-01-31' AND created_at >= '2020-01-01'
+        AND country IS NOT NULL
+    GROUP BY country
+)
+SELECT j.country
+FROM jan_summary j
+LEFT JOIN dec_summary d ON d.country = j.country
+WHERE (j.country_rank < d.country_rank) OR d.country IS NULL;
+```
