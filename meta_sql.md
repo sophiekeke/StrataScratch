@@ -33,7 +33,7 @@ Case: If FB wants to launch Messenger, what is the business value of Messenger a
 
 
 
---strataScratch
+**StrataScratch SQL**
 
 https://platform.stratascratch.com/coding/10064-highest-energy-consumption?code_type=1
 Highest Energy Consumption
@@ -56,6 +56,18 @@ select dense_rank() over (order by tot_consumption desc ) as rank_num
 select date,tot_consumption from  rank_rs
 where rank_num=1 order by date;
 
+
+https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1
+Share of Active Users
+Output share of US users that are active. Active users are the ones with an "open" status in the table.
+
+with base as (
+select * from fb_active_users
+where country = 'USA')
+select 1.00 * count(distinct case when status='open' 
+then user_id end) / count(distinct user_id ) as ratio
+from base
+;
 
 
 
