@@ -91,4 +91,30 @@ from base ;
 ```
 
 
+https://platform.stratascratch.com/coding/2007-rank-variance-per-country?code_type=1
+Rank Variance Per Country
+Which countries have risen in the rankings based on the number of comments between Dec 2019 vs Jan 2020? Hint: Avoid gaps between ranks when ranking countries.
+
+```sql
+with base as (
+select --to_chart(c.created_at,'YYYYMM') as ym
+ u.country as country
+, sum(number_of_comments) as tot_number_of_comments
+, sum(case when to_char(c.created_at,'YYYY-MM') = '2019-12' then number_of_comments else 0 end) as before_comment
+, sum(case when to_char(c.created_at,'YYYY-MM') = '2020-01' then number_of_comments else 0 end) as after_comment
+from fb_comments_count c 
+inner join fb_active_users u on c.user_id = u.user_id
+where to_char(c.created_at,'YYYY-MM') in ('2019-12','2020-01')
+group by 1
+),
+comp as
+(select 
+country, dense_rank() over (order by after_comment desc ) as rank_num_after
+,dense_rank() over (order by before_comment desc ) as rank_num_before
+from base)
+select country ,rank_num_after,rank_num_before
+from comp where rank_num_after<rank_num_before
+order by rank_num_after
+;
+```
 
