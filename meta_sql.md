@@ -73,5 +73,56 @@ then user_id end) / count(distinct user_id ) as ratio
 from base
 ;
 
+Highest Energy Consumption
+
+Find the date with the highest total energy consumption from the Meta/Facebook data centers. Output the date along with the total energy consumption across all data centers.
+
+sql
+
+WITH union_all AS (
+    SELECT * FROM fb_eu_energy 
+    UNION ALL 
+    SELECT * FROM fb_asia_energy 
+    UNION ALL 
+    SELECT * FROM fb_na_energy
+),
+agg AS (
+    SELECT 
+        date, 
+        SUM(consumption) AS tot_consumption 
+    FROM union_all 
+    GROUP BY 1
+),
+rank_rs AS (
+    SELECT 
+        DENSE_RANK() OVER (ORDER BY tot_consumption DESC) AS rank_num, 
+        * 
+    FROM agg
+)
+SELECT 
+    date,
+    tot_consumption 
+FROM rank_rs 
+WHERE rank_num = 1 
+ORDER BY date;
+
+Share of Active Users
+
+Output the share of US users that are active. Active users are the ones with an "open" status in the table.
+
+sql
+
+WITH base AS (
+    SELECT * 
+    FROM fb_active_users 
+    WHERE country = 'USA'
+)
+SELECT 
+    1.00 * COUNT(DISTINCT CASE WHEN status = 'open' THEN user_id END) 
+    / COUNT(DISTINCT user_id) AS ratio 
+FROM base;
+
+
+
 
 
