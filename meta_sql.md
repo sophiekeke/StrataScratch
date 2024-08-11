@@ -75,6 +75,7 @@ SELECT
 FROM rank_rs 
 WHERE rank_num = 1 
 ORDER BY date;
+```
 
 https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1 Share of Active Users
 
