@@ -155,3 +155,6 @@ FROM jan_summary j
 LEFT JOIN dec_summary d ON d.country = j.country
 WHERE (j.country_rank < d.country_rank) OR d.country IS NULL;
 ```
+
+
+More questions: https://www.stratascratch.com/blog/facebook-data-scientist-interview-questions/
