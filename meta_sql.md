@@ -81,13 +81,14 @@ https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1
 
 Output share of US users that are active. Active users are the ones with an "open" status in the table.
 
+```sql
 with base as ( 
     select * from fb_active_users 
     where country = 'USA'
 ) 
 select 1.00 * count(distinct case when status='open' then user_id end) / count(distinct user_id ) as ratio 
 from base ;
-
+```
 
 
 
