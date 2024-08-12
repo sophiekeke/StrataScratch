@@ -179,3 +179,17 @@ select 1.00 * coalesce(search_clicked_cnt,0)/dem_search_cnt as clicked_perc
 from base
  ;
  ```
+- **The official solution**
+```sql
+SELECT (AVG(CASE
+                WHEN search_results_position <=3
+                     AND clicked = 1 THEN 1.0
+                ELSE 0
+            END)::float)*100 AS top_3_clicked,
+       (AVG(CASE
+                WHEN search_results_position <=3
+                     AND clicked = 0 THEN 1.0
+                ELSE 0
+            END)::float)*100 AS top_3_notclicked
+FROM fb_search_events
+ ```
