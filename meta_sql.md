@@ -41,9 +41,10 @@ Case: If FB wants to launch Messenger, what is the business value of Messenger a
 
 **StrataScratch**  
 
-https://platform.stratascratch.com/coding/10064-highest-energy-consumption?code_type=1 Highest Energy Consumption
+https://platform.stratascratch.com/coding/10064-highest-energy-consumption?code_type=1 
+-*Highest Energy Consumption
 
-Find the date with the highest total energy consumption from the Meta/Facebook data centers. Output the date along with the total energy consumption across all data centers.
+-*Find the date with the highest total energy consumption from the Meta/Facebook data centers. Output the date along with the total energy consumption across all data centers.
 
 ```sql
 WITH union_all AS (
@@ -77,9 +78,10 @@ WHERE rank_num = 1
 ORDER BY date;
 ```
 
-https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1 Share of Active Users
+https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1 
+-*Share of Active Users
 
-Output share of US users that are active. Active users are the ones with an "open" status in the table.
+-*Output share of US users that are active. Active users are the ones with an "open" status in the table.
 
 ```sql
 with base as ( 
@@ -92,8 +94,8 @@ from base ;
 
 
 https://platform.stratascratch.com/coding/2007-rank-variance-per-country?code_type=1
-Rank Variance Per Country
-Which countries have risen in the rankings based on the number of comments between Dec 2019 vs Jan 2020? Hint: Avoid gaps between ranks when ranking countries.
+-*Rank Variance Per Country
+-*Which countries have risen in the rankings based on the number of comments between Dec 2019 vs Jan 2020? Hint: Avoid gaps between ranks when ranking countries.
 
 ```sql
 with base as (
@@ -123,7 +125,8 @@ order by rank_num_after
 ```
 Solution with step by step: https://www.stratascratch.com/blog/facebook-data-scientist-interview-questions/
 Solution youtube video: https://www.youtube.com/watch?v=ek3OiqCkEEM
-The tricky part is the Dec comment could be 0, so even the rank is the same, but should consider no record in that month, so needs to surface it.
+
+-*The tricky part is the Dec comment could be 0, so even the rank is the same, but should consider no record in that month, so needs to surface it.
 
 ```sql
 WITH dec_summary AS (
@@ -160,8 +163,8 @@ WHERE (j.country_rank < d.country_rank) OR d.country IS NULL;
 More questions: https://www.stratascratch.com/blog/facebook-data-scientist-interview-questions/
 
 https://platform.stratascratch.com/coding/10288-clicked-vs-non-clicked-search-results?code_type=1
-Clicked Vs Non-Clicked Search Results
-The 'position' column represents the position of the search results, and 'has_clicked' column represents whether the user has clicked on this result. Calculate the percentage of clicked search results that were in the top 3 positions. Also, calculate the percentage of non-clicked search results that were in the top 3 positions. Both percentages should be with respect to the total number of search records (all positions and both clicked and non-clicked searches). Output both percentages in the same row as two columns.
+-*Clicked Vs Non-Clicked Search Results
+-*The 'position' column represents the position of the search results, and 'has_clicked' column represents whether the user has clicked on this result. Calculate the percentage of clicked search results that were in the top 3 positions. Also, calculate the percentage of non-clicked search results that were in the top 3 positions. Both percentages should be with respect to the total number of search records (all positions and both clicked and non-clicked searches). Output both percentages in the same row as two columns.
 
 ```sql
 with base as (
