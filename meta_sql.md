@@ -158,3 +158,21 @@ WHERE (j.country_rank < d.country_rank) OR d.country IS NULL;
 
 
 More questions: https://www.stratascratch.com/blog/facebook-data-scientist-interview-questions/
+
+https://platform.stratascratch.com/coding/10288-clicked-vs-non-clicked-search-results?code_type=1
+Clicked Vs Non-Clicked Search Results
+The 'position' column represents the position of the search results, and 'has_clicked' column represents whether the user has clicked on this result. Calculate the percentage of clicked search results that were in the top 3 positions. Also, calculate the percentage of non-clicked search results that were in the top 3 positions. Both percentages should be with respect to the total number of search records (all positions and both clicked and non-clicked searches). Output both percentages in the same row as two columns.
+
+```sql
+with base as (
+select 
+ count(case when search_results_position<=3 and clicked=1 then search_id end) as search_clicked_cnt
+,count(case when search_results_position<=3 and clicked=0 then search_id  end) as search_nonclicked_cnt
+,count( search_id ) as dem_search_cnt
+from fb_search_events
+)
+select 1.00 * coalesce(search_clicked_cnt,0)/dem_search_cnt as clicked_perc
+,1.00 * coalesce(search_nonclicked_cnt,0)/dem_search_cnt as nonclicked_perc
+from base
+ ;
+ ```
