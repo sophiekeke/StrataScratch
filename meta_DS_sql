@@ -35,5 +35,27 @@ and m.send_date >= current_date - interval '30' Day;
 
 
 Q2: Identify the top 5 users who sent the most messages in the last month.
-clarify, most messages given the frequency or length? should be frequency
+Clarification question
+By 'most messages, do we mean the highest frequency (number of messages sent) or the total length of messages? I assume it should be frequency?"
+Should ties be handled? determine whether we should use using DENSE_RANK() or RANK()? 
+Do we need to consider factors like country or primary device when ranking users?
 
+
+WITH base AS (
+    SELECT sender_id, COUNT(*) AS m_count
+    FROM messages 
+    WHERE send_date >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')
+      AND send_date < DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY sender_id
+),
+ranked AS (
+    SELECT 
+        sender_id,
+        m_count,
+        DENSE_RANK() OVER (ORDER BY m_count DESC) AS rank_num
+    FROM base
+)
+SELECT sender_id, m_count, rank_num
+FROM ranked
+WHERE rank_num <= 5
+ORDER BY rank_num;
