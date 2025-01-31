@@ -1,0 +1,39 @@
+Table: messages
+
+sender_id | receiver_id | send_date   | message_id | message_length
+----------|-------------|-------------|------------|---------------
+101       | 202        | '2023-04-01' | 1001       | 150
+102       | 203        | '2023-04-01' | 1002       | 200
+101       | 204        | '2023-04-01' | 1003       | 120
+
+Table: users
+
+user_id | signup_date | country | primary_device | active_flag | last_active_date
+--------|-------------|---------|----------------|-------------|-----------------
+101     | '2022-01-01'| US      | Android        | 1           | '2023-04-01'
+102     | '2023-01-02'| GB      | iOS            | 1           | '2023-04-01'
+203     | '2022-12-15'| US      | iOS            | 1           | '2023-03-30'
+204     | '2022-11-10'| CA      | Android        | 0           | '2023-03-25'
+
+Q1: Calculate the average message length sent by active users in the last 30 days.
+
+clarify, Should the 30-day window be inclusive or exclusive? 
+
+select 
+avg(message_length) as avg_message_length
+from users u
+inner join messages m on u.user_id = m.sender_id
+where u.active_flag = 1
+and datediff(days,m.send_date,current_date) <=30
+
+select 
+avg(message_length) as avg_message_length
+from users u
+inner join messages m on u.user_id = m.sender_id
+where u.active_flag = 1
+and m.send_date >= current_date - interval '30' Day;
+
+
+Q2: Identify the top 5 users who sent the most messages in the last month.
+clarify, most messages given the frequency or length? should be frequency
+
